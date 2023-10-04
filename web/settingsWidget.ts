@@ -602,8 +602,8 @@ class SettingsWidget {
 				} else if (new RegExp(issueRegex, 'gu')) {
 					regExpParseError = null;
 				}
-			} catch (e) {
-				regExpParseError = e.message;
+			} catch (e: any) {
+				regExpParseError = e?.message;
 			}
 			if (regExpParseError !== null) {
 				dialog.showError('Invalid Issue Regex', regExpParseError, 'Go Back', () => {
