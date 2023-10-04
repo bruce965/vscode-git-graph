@@ -36,6 +36,7 @@
 		"workspace"
 	],
 	"activationEvents": [
+		"onWebviewPanel:git-graph",
 		"*"
 	],
 	"main": "./out/extension.js",

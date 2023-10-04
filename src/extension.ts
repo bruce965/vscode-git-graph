@@ -11,6 +11,7 @@ import { RepoManager } from './repoManager';
 import { StatusBarItem } from './statusBarItem';
 import { GitExecutable, UNABLE_TO_FIND_GIT_MSG, findGit, getGitExecutableFromPaths, showErrorMessage, showInformationMessage } from './utils';
 import { EventEmitter } from './utils/event';
+import { GitGraphViewSerializer } from './gitGraphViewSerializer';
 
 /**
  * Activate Git Graph.
@@ -45,8 +46,10 @@ export async function activate(context: vscode.ExtensionContext) {
 	const statusBarItem = new StatusBarItem(repoManager.getNumRepos(), repoManager.onDidChangeRepos, onDidChangeConfiguration, logger);
 	const commandManager = new CommandManager(context, avatarManager, dataSource, extensionState, repoManager, gitExecutable, onDidChangeGitExecutable, logger);
 	const diffDocProvider = new DiffDocProvider(dataSource);
+	const gitGraphViewSerializer = new GitGraphViewSerializer(context, avatarManager, dataSource, extensionState, repoManager, logger);
 
 	context.subscriptions.push(
+		vscode.window.registerWebviewPanelSerializer('git-graph', gitGraphViewSerializer),
 		vscode.workspace.registerTextDocumentContentProvider(DiffDocProvider.scheme, diffDocProvider),
 		vscode.workspace.onDidChangeConfiguration((event) => {
 			if (event.affectsConfiguration('git-graph')) {

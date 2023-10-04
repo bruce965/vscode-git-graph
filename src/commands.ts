@@ -117,7 +117,7 @@ export class CommandManager extends Disposable {
 			loadRepo = this.repoManager.getRepoContainingFile(getPathFromUri(vscode.window.activeTextEditor.document.uri));
 		}
 
-		GitGraphView.createOrShow(this.context.extensionPath, this.dataSource, this.extensionState, this.avatarManager, this.repoManager, this.logger, loadRepo !== null ? { repo: loadRepo } : null);
+		GitGraphView.createOrShow(this.context.extensionPath, this.dataSource, this.extensionState, this.avatarManager, this.repoManager, this.logger, loadRepo !== null ? { repo: loadRepo } : null, undefined);
 	}
 
 	/**
@@ -213,7 +213,7 @@ export class CommandManager extends Disposable {
 					GitGraphView.createOrShow(this.context.extensionPath, this.dataSource, this.extensionState, this.avatarManager, this.repoManager, this.logger, {
 						repo: item.description,
 						runCommandOnLoad: 'fetch'
-					});
+					}, undefined);
 				}
 			}, () => {
 				showErrorMessage('An unexpected error occurred while running the command "Fetch from Remote(s)".');
@@ -222,9 +222,9 @@ export class CommandManager extends Disposable {
 			GitGraphView.createOrShow(this.context.extensionPath, this.dataSource, this.extensionState, this.avatarManager, this.repoManager, this.logger, {
 				repo: repoPaths[0],
 				runCommandOnLoad: 'fetch'
-			});
+			}, undefined);
 		} else {
-			GitGraphView.createOrShow(this.context.extensionPath, this.dataSource, this.extensionState, this.avatarManager, this.repoManager, this.logger, null);
+			GitGraphView.createOrShow(this.context.extensionPath, this.dataSource, this.extensionState, this.avatarManager, this.repoManager, this.logger, null, undefined);
 		}
 	}
 
@@ -286,7 +286,7 @@ export class CommandManager extends Disposable {
 						commitHash: commitHashes[commitHashes.length > 1 ? 1 : 0],
 						compareWithHash: commitHashes.length > 1 ? commitHashes[0] : null
 					}
-				});
+				}, undefined);
 			}
 		}, () => {
 			showErrorMessage('An unexpected error occurred while running the command "Resume a specific Code Review in Workspace...".');
